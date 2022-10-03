@@ -158,5 +158,7 @@ devolver el mes mayo.
 
 Bibliografía:\
 https://www.w3schools.com/js/js_variables.asp
+
 https://www.w3schools.com/jsref/jsref_parseint.asp
+
 https://lenguajejs.com/javascript/arrays/que-es/
