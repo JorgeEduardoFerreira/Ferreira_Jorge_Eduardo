@@ -103,7 +103,7 @@ document.write(`El producto de a por b es ${result} `);
 </body>
 </html>
 ```
-**Ejercicio 6:**
+**Ejercicio 6:**\
 Crear un array llamado “dias” y que almacene el nombre de los siete días de la semana.\
 Mostrar por pantalla los siete nombres utilizando la función console.log().\
 **Ejercicio 7:**
@@ -123,7 +123,7 @@ document.write(resultado);
 </body>
 </html>
 ```
-**Ejercicio 8:**
+**Ejercicio 8:**\
 Copiar el siguiente código dentro de un archivo, luego guardarlo con el nombre:
 Ejercicio8.html’. Ejecuta el programa en el navegador.
 ```
@@ -146,11 +146,11 @@ document.write(`<br/> <br/> La suma es ${resultado} ` );
 </body>
 </html>
 ```
-**Ejercicio 9:**
+**Ejercicio 9:**\
 Crear un archivo: Ejercicio9.html’. Declarar un array llamado “vocales” con las 5 letras.\
 Luego se deben imprimir en el navegador uno debajo de otro.
 
-**Ejercicio 10:**
+**Ejercicio 10:**\
 Crear un archivo: Ejercicio10.html’ Declarar un array llamado “meses” y que tenga
 guardado los meses del año. Luego el usuario debe poder tipear en el navegador un
 número de 1 al 12 y este le devolverá el nombre del mes. Por ejemplo escribe 5 debe
