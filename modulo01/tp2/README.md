@@ -10,7 +10,7 @@ letras.
 3. Determinar el resultado de las cuatro operaciones matemáticas realizadas con los dos
 elementos numéricos.
 
-**Ejercicio 2:**
+**Ejercicio 2:**\
 Completar las condiciones de los if del siguiente script para que los mensajes se muestren
 siempre de forma correcta:
 ```
@@ -71,6 +71,6 @@ Por ejemplo:12 = tiene 31 días.
 
 
 Bibliografía:
-https://www.w3schools.com/js/js_htmldom_document.asp\
-https://www.w3schools.com/js/js_object_iterables.asp\
+https://www.w3schools.com/js/js_htmldom_document.asp \
+https://www.w3schools.com/js/js_object_iterables.asp \
 https://www.w3schools.com/js/js_object_methods.asp
