@@ -70,7 +70,7 @@ Escribir un programa que reciba el número del mes y devuelva si tiene 31, 30 o 
 Por ejemplo:12 = tiene 31 días.
 
 
-Bibliografía:
+Bibliografía: \
 https://www.w3schools.com/js/js_htmldom_document.asp \
 https://www.w3schools.com/js/js_object_iterables.asp \
 https://www.w3schools.com/js/js_object_methods.asp
