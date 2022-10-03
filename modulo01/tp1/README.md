@@ -157,6 +157,6 @@ número de 1 al 12 y este le devolverá el nombre del mes. Por ejemplo escribe 5
 devolver el mes mayo.
 
 Bibliografía:
-https://www.w3schools.com/js/js_variables.asp
-https://www.w3schools.com/jsref/jsref_parseint.asp
+https://www.w3schools.com/js/js_variables.asp\
+https://www.w3schools.com/jsref/jsref_parseint.asp\
 https://lenguajejs.com/javascript/arrays/que-es/
