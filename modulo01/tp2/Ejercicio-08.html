@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TP2 Ejercicio 8 </title>
+<p>*****</p> 
+    <meta charset="utf-8">
+</head> 
+<body>
+    <script>
+/*Ejercicio 8:
+Crea una función que genere 100 números aleatorios entre 1 y 100 que no se repitan y luego
+imprima por pantalla usando document.write(text).
+*/
+
+// referencia: https://www.lawebdelprogramador.com/codigo/JavaScript/5322-Numeros-aleatorios-sin-repetir-en-JavaScript.html
+
+/**
+ * Esta función devuelve la "cantidad" de números aleatorios sin repetir entre
+ * el "min" y "max" incluyendo el min
+ *
+ * Si la "cantidad" de numeros a devolver es mayor que la diferentecia entre el
+ * "min" y el "max" o el "min" es superior al "max" devolvera false
+ *
+ *      numerosAleatoriosNoRepetidos(10,20,5) - devolvera cinco numeros
+ *      aleatorios sin repetir entre el 10 y 19
+ *
+ * @param int min
+ * @param int max
+ * @param int cantidad
+ */
+ function numerosAleatoriosNoRepetidos(min, max, cantidad) {
+    let numeros=[];
+ 
+    if (min>max || cantidad>max-min) {
+        return false;
+    }
+ 
+    while (numeros.length<cantidad) {
+        const num=Math.floor((Math.random() * (max - min)) + min );
+        if (numeros.indexOf(num)==-1) {
+            numeros.push(num);
+        }
+    }
+    return numeros;
+}
+var min=1
+var max=101
+cantidad = 100
+
+document.write(numerosAleatoriosNoRepetidos(min, max, cantidad));
+
+    </script>
+<p>*****</p> 
+
+</body> 
+</html>
