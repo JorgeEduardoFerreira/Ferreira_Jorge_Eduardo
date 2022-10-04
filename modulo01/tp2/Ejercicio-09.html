@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TP2 Ejercicio 9 </title>
+    <p>*****<br></p> 
+    <P>ALUMNO: JORGE EDUARDO FERREIRA</P>
+</head> 
+<body>
+<script>
+/*Ejercicio 9:
+Crear un programa que recibe las notas de un alumno, todos los números deben ser naturales
+<11. Debe calcular el promedio. Por último imprimir en pantalla si el valor de media es < 5
+“Reprobado”, entre 6 y 8 “Aprobado” y si es mayor a 8 “Sobresaliente”
+*/
+
+
+var total_notas = parseInt(prompt("Ingrese la cantidad de notas que va a cargar","0")) //como el promt siempre te carga como texto, le pongo parseint para que tome como numero entero 
+while (total_notas <=0) {
+    total_notas = parseInt(prompt("Ingrese una cantidad VALIDA de notas que va a cargar. Debe ser mayor a 0 ","0"))
+}
+var notas = Array(total_notas)
+var notaaux
+var Sum = 0
+
+for (let i=0; i<total_notas; i++){
+    notaaux= parseFloat(prompt("Ingrese la Nota " + (i+1) + " del alumno. ==>> ",0))  //leo la nota y verifico q sea entre 0 y 10
+                                                                                    //como el promt siempre te carga como texto, le pongo parseFloar para que tome como numero decimal
+    while (notaaux <= -1 || notaaux > 10) {                                         //condiciono a q no se ingresen datos errados
+        notaaux= parseFloat(prompt("Ingrese la Nota " + (i+1) + " del alumno que sea Valida. (debe ser entre 0 y 10)==>> ",0))
+    }
+    notas[i]=notaaux
+    Sum += notas[i]
+}
+
+console.log (notas) //chequeo los datos que se cargo a modo de control
+console.log (Sum)
+
+Prom = Sum/total_notas
+console.log (total_notas)
+console.log (Prom) // chequeo algunos datos para control
+
+document.write("EL PROMEDIO DEL ALUMNO ES = "+ Prom + "<br>")
+
+
+if (Prom<5) {
+    console.log ("REPROBADO")
+    document.write("REPROBADO")
+}
+else { if (Prom >= 6 && Prom <= 8){
+            console.log ("APROBADO")
+            document.write("APROBADO")
+        }
+        else { (Prom<9) 
+            console.log ("SOBRESALIENTE")
+            document.write("SOBRESALIENTE")
+        }
+}
+
+</script>
+<p>*****</p> 
+
+</body> 
+</html>
