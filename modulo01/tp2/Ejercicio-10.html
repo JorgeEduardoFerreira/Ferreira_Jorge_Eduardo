@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TP2 Ejercicio 10 </title>
+    <p>*****<br></p> 
+    <P>ALUMNO: JORGE EDUARDO FERREIRA</P>
+</head> 
+<body>
+<script>
+/*Ejercicio 10:
+Escribir un programa que reciba el número del mes y devuelva si tiene 31, 30 o menos días.
+Por ejemplo:12 = tiene 31 días.
+*/
+
+var meses = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"] //ARRAY CON LOS NOMBRES DE LOS MESES
+var mesNum= [1,2,3,4,5,6,7,8,9,10,11,12] //ARRAY CON EL NUMERO DE LOS MESES
+var diasMes= [31,28,31,30,31,30,31,31,30,31,30,31] //ARRAY CON LA CANTIDAD DE DIAS DE CADA MES
+
+var consulta = parseInt(prompt("Por favor ingrese el Número del mes que desea consultar cuantos dias tiene",0))
+while (consulta<=0 || consulta>12) {
+    consulta = parseInt(prompt("ERROR, INGRESE UN NUMERO VALIDO. Por favor ingrese el Número del mes que desea consultar cuantos dias tiene",0))
+}
+
+for (let i=0; i<meses.length; i++) {
+    if (consulta === mesNum[i]) {
+        if (consulta === 2) {
+            console.log ("El mes "+ consulta +" es "+ meses[i] +" y tienen "+ diasMes[i] +" dias")
+            console.log ("Recordar que si es un año bisiesto deberá agregarle 1 dia más")
+            document.write ("El mes "+ consulta +" es "+ meses[i] +" y tienen "+ diasMes[i] +" dias" +"<br>")
+            document.write ("Recordar que si es un año bisiesto deberá agregarle 1 dia más")
+        }
+        else{
+            console.log ("El mes "+ consulta +" es "+ meses[i] +" y tienen "+ diasMes[i] +" dias")
+            document.write ("El mes "+ consulta +" es "+ meses[i] +" y tienen "+ diasMes[i] +" dias") 
+        }
+    }
+}
+
+</script>
+<p>*****</p> 
+
+</body> 
+</html>
