@@ -106,7 +106,7 @@ document.write(`El producto de a por b es ${result} `);
 **Ejercicio 6:**\
 Crear un array llamado “dias” y que almacene el nombre de los siete días de la semana.\
 Mostrar por pantalla los siete nombres utilizando la función console.log().\
-**Ejercicio 7:**
+**Ejercicio 7:**\
 Ejecutar el programa en el navegador. Guardarlo con el nombre: Ejercicio7.html’ Pasar
 valores por teclado. Anotar con comentarios que hace el programa.
 ```
