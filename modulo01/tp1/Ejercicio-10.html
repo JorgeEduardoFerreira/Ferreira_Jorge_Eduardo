@@ -1,0 +1,39 @@
+/*Ejercicio 10:
+Crear un archivo: Ejercicio10.html’ Declarar un array llamado “meses” y que tenga guardado los meses del año. 
+Luego el usuario debe poder tipear en el navegador un número de 1 al 12 y este le devolverá el nombre del mes. 
+Por ejemplo escribe 5 debe devolver el mes mayo.
+*/
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <p>EL MESE ES</p>
+    </head>
+    <body>
+        <script>
+            let val1
+            let num1
+            let meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+            val1 = window.prompt("Ingrese el numero de mes","0");
+            num1 = parseInt(val1); //forzamos a que lea solo la parte entera del numero cargado por el prompt
+                while (num1<1 || num1>12) //ponemos un filtro para que no se pueda ingresar otro número q no corresponda a un mes
+                {
+                    document.writeln ("El número ingresado no corresponde a un Mes" +"<br>")
+                    val1 = window.prompt("Ingrese el numero de mes nuevamente","0");
+                    num1 = parseInt(val1);
+                }
+                for (let i = 0; i < meses.length; i++) //recorremos el array
+                {
+                    if (num1 == i+1) /* comparamos q el numero ingresado sea igual al del indice + 1 para que concuerde en numero
+                                     ingresado con el numero de mes, cuando lo encuentra imprime el elemento de ese array que seria
+                                     el mes que corresponde a ese numero
+                                     */
+                    {
+                        document.writeln (meses[i] + "<br>")
+                        console.log (meses[i])
+                    }
+                }                
+        </script>
+    </body>
+</html>
