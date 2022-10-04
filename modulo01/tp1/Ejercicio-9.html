@@ -1,0 +1,20 @@
+/*Ejercicio 9:
+Crear un archivo: Ejercicio9.html’. Declarar un array llamado “vocales” con las 5 letras.
+Luego se deben imprimir en el navegador uno debajo de otro.
+*/
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <p>LISTADO DE VOCALES</p> 
+    </head>
+    <body>
+        <script>
+            //lo que esta entre las <p> imprime como título en pantalla
+            let VOCALES = ["A","E","I","O","U"] //Se crea el array con las Vocales como elementos
+            for (let i = 0; i < VOCALES.length; i++) {
+            document.write (VOCALES[i] + "<br>") // imprime en pantalle las vocales una debajo de otra recorriendo el array por medio del bucle FOR
+            }
+        </script>
+    </body>
+</html>
