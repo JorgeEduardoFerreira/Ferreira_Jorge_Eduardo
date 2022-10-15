@@ -1,3 +1,3 @@
-# ** Bases de Datos
+# Bases de Datos
 
-Alumno: Ferreira Jorge Eduardo
+### Alumno: Ferreira Jorge Eduardo
