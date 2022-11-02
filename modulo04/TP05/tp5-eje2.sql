@@ -393,16 +393,16 @@ select v.*
 -- 43.Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).            
 select *
 	from ventas.clientes 
-		where not exists ( select p.id_cliente 
-								from ventas.pedidos as p 
-									where p.id_cliente=ventas.clientes.id);   
+	where not exists ( select p.id_cliente 
+				from ventas.pedidos as p 
+				where p.id_cliente=ventas.clientes.id);   
 		
         
 -- 44: Devuelve un listado de los vendedores que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).
 select *
-		from ventas.vendedores
-			where not exists ( select p.id_vendedor from
-									ventas.pedidos as p
-										where p.id_vendedor=ventas.vendedores.id);
+	from ventas.vendedores
+	where not exists ( select p.id_vendedor from
+				ventas.pedidos as p
+				where p.id_vendedor=ventas.vendedores.id);
         
         
