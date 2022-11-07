@@ -375,7 +375,6 @@ VALUES
 ('{"zonaHoraria": "America/Argentina/BuenosAires"}','3'),
 ('{"fechaInicioActividades": "01/01/2019", "mesAperturaCaja": "Enero", "mesCierreCaja": "Diciembre"}','1'),
 ('{"balancesAniosAnteriores": {"2019": {"ingreso": "7374901.93", "egreso": "3732538.75"}, "2020":{"ingreso": "27442665.12", "egreso": "8522331.82"},"2021": {"ingreso":"31634912.57", "egreso": "9757142.66"}}}','4');
-
-SELECT * FROM elsistema.parametros;   
     
     -- ALUMNO: FERREIRA JORGE EDUARDO
+    
