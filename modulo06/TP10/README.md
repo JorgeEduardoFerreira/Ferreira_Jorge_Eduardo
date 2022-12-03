@@ -1,0 +1,3 @@
+# CARPETA PARA EJERCICOS TRABAJO PRACTICO N°10
+---
+## ALUMNO: Ferreira Jorge Eduardo
