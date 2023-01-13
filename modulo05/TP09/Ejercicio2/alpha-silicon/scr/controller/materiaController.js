@@ -2,24 +2,24 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const cursoDb = require("../datasource/cursoDB.js");
+const materiaDb = require("../datasource/materiaDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:idcurso', getByidcurso);
+app.get('/:idmateria', getByIdmateria);
 
 app.post('/', create);
 
-app.put('/:idcurso', update);
+app.put('/:idmateria', update);
 
-// app.delete('/del/:idcurso', eliminar);
+// app.delete('/del/:idmateria', eliminar);
 
-app.delete('/:idcurso', eliminacionlogica);
+app.delete('/:idmateria', eliminacionlogica);
 
-// Metododo para listar todas las cursos 
+// Metododo para listar todas las materias 
 function getAll(req, res) {
-    cursoDb.getAll(function (err, result) {
+    materiaDb.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -28,9 +28,9 @@ function getAll(req, res) {
     });
 }
 
-// Metodo para buscar curso por su id
-function getByidcurso(req, res) {
-    cursoDb.getByidcurso(req.params.idcurso,function (err, result) {
+//-- Metodo para buscar Materia por su id
+function getByIdmateria(req, res) {
+    materiaDb.getByIdmateria(req.params.idmateria,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -39,9 +39,9 @@ function getByidcurso(req, res) {
     });
 }
 
-// Metodo para agregar cursos
+//--// Metodo para agregar Materia
 function create(req, res) {
-    cursoDb.create(req.body, function (err, result) {
+    materiaDb.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -50,9 +50,9 @@ function create(req, res) {
     });
 }
 
-// Metodo para modificar curso identificando con su id
+//--//-- Metodo para modificar materias
 function update(req, res) {
-    cursoDb.update(req.params.idcurso, req.body, function (result) {
+    materiaDb.update(req.params.idmateria, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -63,9 +63,9 @@ function update(req, res) {
     });
 }
 
-// //Metodo par eliminar fisicmente curso de la base de datos identificando por id
+// //--//--// Metodo par eliminar fisicmente Materias de la base de datos identificando por id
 // function eliminar(req, res) {
-//     cursoDb.delete(req.params.idcurso,  function (err, result) {
+//     materiaDb.delete(req.params.idmateria,  function (err, result) {
 //         if (err) {
 //             res.status(500).send(err);
 //         } else {
@@ -78,10 +78,9 @@ function update(req, res) {
 //     });
 // }
 
-
-// Metodo par eliminar logicamente el curso cambiando el estado a 0 identificando por id
+//--//--//-- Metodo par eliminar logicamente Materias indentificando por su id cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    cursoDb.logdelete(req.params.idcurso, function (result) {
+    materiaDb.logdelete(req.params.idmateria, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {

@@ -2,24 +2,24 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const cursoDb = require("../datasource/cursoDB.js");
+const sedeDB = require("../datasource/sedeDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:idcurso', getByidcurso);
+app.get('/:idsede', getByIdsede);
 
 app.post('/', create);
 
-app.put('/:idcurso', update);
+app.put('/:idsede', update);
 
-// app.delete('/del/:idcurso', eliminar);
+// app.delete('/del/:idsede', eliminar);
 
-app.delete('/:idcurso', eliminacionlogica);
+app.delete('/:idsede', eliminacionlogica);
 
-// Metododo para listar todas las cursos 
+// Metododo para listar todas las sedes
 function getAll(req, res) {
-    cursoDb.getAll(function (err, result) {
+    sedeDB.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -27,10 +27,9 @@ function getAll(req, res) {
         }
     });
 }
-
-// Metodo para buscar curso por su id
-function getByidcurso(req, res) {
-    cursoDb.getByidcurso(req.params.idcurso,function (err, result) {
+//// Metodo para buscar sede por su id
+function getByIdsede(req, res) {
+   sedeDB.getByIdsede(req.params.idsede,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -38,10 +37,9 @@ function getByidcurso(req, res) {
         }
     });
 }
-
-// Metodo para agregar cursos
+////// Metodo para agregar sede
 function create(req, res) {
-    cursoDb.create(req.body, function (err, result) {
+    sedeDB.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -50,9 +48,9 @@ function create(req, res) {
     });
 }
 
-// Metodo para modificar curso identificando con su id
+//////// Metodo para modificar sede identificando por su id
 function update(req, res) {
-    cursoDb.update(req.params.idcurso, req.body, function (result) {
+    sedeDB.update(req.params.idsede, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -63,9 +61,9 @@ function update(req, res) {
     });
 }
 
-// //Metodo par eliminar fisicmente curso de la base de datos identificando por id
+// ////////// Metodo par eliminar fisicmente sede de la base de datos identificando por id
 // function eliminar(req, res) {
-//     cursoDb.delete(req.params.idcurso,  function (err, result) {
+//     sedeDB.delete(req.params.idsede,  function (err, result) {
 //         if (err) {
 //             res.status(500).send(err);
 //         } else {
@@ -78,10 +76,9 @@ function update(req, res) {
 //     });
 // }
 
-
-// Metodo par eliminar logicamente el curso cambiando el estado a 0 identificando por id
+//////////// Metodo par eliminar logicamente la sede indentificando por su id cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    cursoDb.logdelete(req.params.idcurso, function (result) {
+    sedeDB.logdelete(req.params.idsede, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {

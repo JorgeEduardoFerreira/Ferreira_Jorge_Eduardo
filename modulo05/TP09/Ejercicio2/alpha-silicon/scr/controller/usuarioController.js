@@ -2,24 +2,34 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const cursoDb = require("../datasource/cursoDB.js");
+const userDB = require("../datasource/userDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:idcurso', getByidcurso);
+app.get('/:idusuario', getByIdusuario);
 
 app.post('/', create);
 
-app.put('/:idcurso', update);
+app.put('/:idusuario', update);
 
-// app.delete('/del/:idcurso', eliminar);
+// app.delete('/del/:idusuario', eliminar);
 
-app.delete('/:idcurso', eliminacionlogica);
+app.delete('/:idusuario', eliminacionlogica);
 
-// Metododo para listar todas las cursos 
+// Metododo para listar todos los usuarios
 function getAll(req, res) {
-    cursoDb.getAll(function (err, result) {
+    userDB.getAll(function (err, result) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(result);
+        }
+    });
+}
+//// Metodo para buscar usuario por su id
+function getByIdusuario(req, res) {
+    userDB.getByIdusuario(req.params.idusuario,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -28,20 +38,9 @@ function getAll(req, res) {
     });
 }
 
-// Metodo para buscar curso por su id
-function getByidcurso(req, res) {
-    cursoDb.getByidcurso(req.params.idcurso,function (err, result) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.json(result);
-        }
-    });
-}
-
-// Metodo para agregar cursos
+////// Metodo para agregar Usuarios
 function create(req, res) {
-    cursoDb.create(req.body, function (err, result) {
+    userDB.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -50,9 +49,9 @@ function create(req, res) {
     });
 }
 
-// Metodo para modificar curso identificando con su id
+//////// Metodo para modificar Usuarios identificando por su id
 function update(req, res) {
-    cursoDb.update(req.params.idcurso, req.body, function (result) {
+    userDB.update(req.params.idusuario, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
@@ -63,9 +62,9 @@ function update(req, res) {
     });
 }
 
-// //Metodo par eliminar fisicmente curso de la base de datos identificando por id
+// ////////// Metodo par eliminar fisicmente usuario de la base de datos identificando por id
 // function eliminar(req, res) {
-//     cursoDb.delete(req.params.idcurso,  function (err, result) {
+//     userDB.delete(req.params.idusuario,  function (err, result) {
 //         if (err) {
 //             res.status(500).send(err);
 //         } else {
@@ -78,10 +77,9 @@ function update(req, res) {
 //     });
 // }
 
-
-// Metodo par eliminar logicamente el curso cambiando el estado a 0 identificando por id
+////////////// Metodo par eliminar usuario indentificando por su id cambiando el estado a 0
 function eliminacionlogica(req, res) {
-    cursoDb.logdelete(req.params.idcurso, function (result) {
+    userDB.logdelete(req.params.idusuario, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
