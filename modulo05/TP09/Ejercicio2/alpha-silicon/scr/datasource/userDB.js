@@ -8,16 +8,16 @@ connection.connect((err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("DB Curso Conectada correctamente");
+        console.log("DB Usuario Conectada correctamente");
     }
 });
 //fin de conexion db
 
-var cursoDb = {};
+var userDb = {};
 
-//Query para listar todos los cursos
-cursoDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM cursos where estado >=1", function (err, result, fields) {
+// Query para listar los usuarios
+userDb.getAll = function (funCallback) {
+    connection.query("SELECT * FROM usuarios where estado >=1", function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -30,9 +30,9 @@ cursoDb.getAll = function (funCallback) {
     });
 }
 
-////Query para listar curso identificado por un id
-cursoDb.getByidcurso = function (idcurso,funCallback) {
-    connection.query("SELECT * FROM cursos WHERE idcurso=?",idcurso, function (err, result, fields) {
+//-- Query para listar un usuario por su id
+userDb.getByIdusuario = function (idusuario,funCallback) {
+    connection.query("SELECT * FROM usuarios WHERE idusuario=?",idusuario, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -44,7 +44,7 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
                 funCallback(undefined, result[0]);
             }else{
                 funCallback({
-                    message: "No se encontro el curso"
+                    message: `No se encontro el usuario con el ID ${idusuario}`
                 });
             }
             
@@ -52,15 +52,15 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
     });
 }
 
-//////Query para crear curso
-cursoDb.create = function (cursos, funCallback) {
-    var query = 'INSERT INTO cursos (nombre,descripcion) VALUES (?,?)'
-    var dbParams = [cursos.nombre, cursos.descripcion];
+//--// Query para crear los usuarios
+userDb.create = function (usuario, funCallback) {
+    var query = 'INSERT INTO usuarios (nickname,email,password) VALUES (?,?,?)'
+    var dbParams = [usuario.nickname, usuario.email, usuario.password];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             if(err.code == 'ER_DUP_ENTRY'){
                 funCallback({
-                    message: `Ya existe el curso con el nombre ${cursos.nombre}`,
+                    message: `Ya existe el usuario con el nickname ${usuario.nickname}`,
                     detail: err
                 });
             }else{
@@ -73,7 +73,7 @@ cursoDb.create = function (cursos, funCallback) {
             console.error(err);
         } else {
             funCallback(undefined, {
-                message: `Se creo el curso ${cursos.nombre} ${cursos.descripcion}`,
+                message: `Se creo el usuario ${usuario.nickname} ${usuario.email}`,
                 detail: result
             });
         }
@@ -83,8 +83,8 @@ cursoDb.create = function (cursos, funCallback) {
 
 /**
  * 
- * @param {*} idcurso 
- * @param {*} cursos 
+ * @param {*} idusuario 
+ * @param {*} usuario 
  * @param {*} funCallback 
  *         retorna:
  *              code = 1 (EXITO)
@@ -93,10 +93,10 @@ cursoDb.create = function (cursos, funCallback) {
  * 
  */
 
-////////Query para modificar curso identificando por su id
-cursoDb.update = function (idcurso, cursos, funCallback) {
-    var query = 'UPDATE cursos SET nombre = ?, descripcion = ?, estado = ? WHERE idcurso = ?'
-    var dbParams = [cursos.nombre, cursos.descripcion, cursos.estado, idcurso];
+//--//-- Query para Actualizar datos de un usuario identificando por su id
+userDb.update = function (idusuario, usuario, funCallback) {
+    var query = 'UPDATE usuarios SET nickname = ?, email = ?, password = ?, estado = ? WHERE idusuario = ?'
+    var dbParams = [usuario.nickname, usuario.email, usuario.password, usuario.estado, idusuario];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             funCallback({
@@ -109,13 +109,13 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el curso ${idcurso}`,
+                    message: `No se encontro el usuario ${idusuario}`,
                     detail: result
                 });
             } else {
                 funCallback({
                     code:1,
-                    message: `Se modifico el curso ${cursos.idcurso} ${cursos.nombre}`,
+                    message: `Se modifico el usuario ${usuario.idusuario} ${usuario.nickname}`,
                     detail: result
                 });
             }
@@ -124,35 +124,34 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
 
 }
 
-// ////////Query para Eliminar fiscamente de la bases de datos un curso identificando por su id
-// cursoDb.delete = function(idcurso,funCallback){
-//     var query = 'DELETE FROM cursos WHERE idcurso = ?'
-//     connection.query(query, idcurso, function (err, result, fields) {
-//         if (err) {
-//             funCallback({
-//                 message: "Surgio un problema, contactese con un administrador. Gracias",
-//                 detail: err
-//             });
-//             console.error(err);
-//         } else {
-//             if (result.affectedRows == 0) {
-//                 funCallback(undefined,{
-//                     message: `No se encontro el curso ${idcurso}`,
-//                     detail: result
-//                 });
-//             } else {
-//                 funCallback(undefined,{
-//                     message: `Se elimino el curso ${idcurso}`,
-//                     detail: result
-//                 });
-//             }
-//         }
-//     });
-// }
+userDb.delete = function(idusuario,funCallback){
+    var query = 'DELETE FROM usuarios WHERE idusuario = ?'
+    connection.query(query, idusuario, function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            if (result.affectedRows == 0) {
+                funCallback(undefined,{
+                    message: `No se encontro el usuario ${idusuario}`,
+                    detail: result
+                });
+            } else {
+                funCallback(undefined,{
+                    message: `Se elimino el usuario ${idusuario}`,
+                    detail: result
+                });
+            }
+        }
+    });
+}
 
-//////////Query para Eliminar logicamente un curso identificando por su id
-cursoDb.logdelete = function (idcurso, funCallback) {
-    connection.query("UPDATE cursos SET estado = 0 WHERE idcurso = ?",idcurso, function (err, result, fields) {
+
+userDb.logdelete = function (idusuario, funCallback) {
+    connection.query("UPDATE usuarios SET estado = 0 WHERE idusuario = ?",idusuario, function (err, result, fields) {
         if (err) {
             funCallback({
                 code:3,
@@ -164,14 +163,14 @@ cursoDb.logdelete = function (idcurso, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el id  ${idcurso} del curso`,
+                    message: `No se encontro el usuario con el ID  ${idusuario}`,
                     detail: result
                 }); 
             } else {
-         //       console.error(err);
+            //   console.error(err);
                     funCallback({
                     code:1,
-                    message: `Se desactivo el curso con el id ${idcurso}`,
+                    message: `Se modifico la  el usuario con el ID ${idusuario}`,
                     detail: result
                 }); 
             }
@@ -179,4 +178,4 @@ cursoDb.logdelete = function (idcurso, funCallback) {
     });
 }
 
-module.exports = cursoDb;
+module.exports = userDb;

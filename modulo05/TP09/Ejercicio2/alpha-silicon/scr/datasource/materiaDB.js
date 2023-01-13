@@ -8,16 +8,16 @@ connection.connect((err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("DB Curso Conectada correctamente");
+        console.log("DB Materias Conectada correctamente");
     }
 });
 //fin de conexion db
 
-var cursoDb = {};
+var materiaDb = {};
 
-//Query para listar todos los cursos
-cursoDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM cursos where estado >=1", function (err, result, fields) {
+// Query para listar las Materias
+materiaDb.getAll = function (funCallback) {
+    connection.query("SELECT * FROM materias where estado >=1", function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -30,9 +30,9 @@ cursoDb.getAll = function (funCallback) {
     });
 }
 
-////Query para listar curso identificado por un id
-cursoDb.getByidcurso = function (idcurso,funCallback) {
-    connection.query("SELECT * FROM cursos WHERE idcurso=?",idcurso, function (err, result, fields) {
+//-- Query para listar una Materia por su id
+materiaDb.getByIdmateria = function (idmateria,funCallback) {
+    connection.query("SELECT * FROM materias WHERE idmateria=?",idmateria, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -44,7 +44,7 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
                 funCallback(undefined, result[0]);
             }else{
                 funCallback({
-                    message: "No se encontro el curso"
+                    message: `No se encontro la materia con el ID ${idmateria}`
                 });
             }
             
@@ -52,15 +52,15 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
     });
 }
 
-//////Query para crear curso
-cursoDb.create = function (cursos, funCallback) {
-    var query = 'INSERT INTO cursos (nombre,descripcion) VALUES (?,?)'
-    var dbParams = [cursos.nombre, cursos.descripcion];
+//--// Query para crear las materias
+materiaDb.create = function (materia, funCallback) {
+    var query = 'INSERT INTO materias (nombre, objetivo, plan_estudio) VALUES (?,?,?)'
+    var dbParams = [materia.nombre, materia.objetivo, materia.plan_estudio];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             if(err.code == 'ER_DUP_ENTRY'){
                 funCallback({
-                    message: `Ya existe el curso con el nombre ${cursos.nombre}`,
+                    message: `Ya existe la materia con el nombre ${materia.nombre}`,
                     detail: err
                 });
             }else{
@@ -73,7 +73,7 @@ cursoDb.create = function (cursos, funCallback) {
             console.error(err);
         } else {
             funCallback(undefined, {
-                message: `Se creo el curso ${cursos.nombre} ${cursos.descripcion}`,
+                message: `Se creo la materia ${materia.nombre} ${materia.objetivo}`,
                 detail: result
             });
         }
@@ -83,8 +83,8 @@ cursoDb.create = function (cursos, funCallback) {
 
 /**
  * 
- * @param {*} idcurso 
- * @param {*} cursos 
+ * @param {*} idmateria 
+ * @param {*} materia 
  * @param {*} funCallback 
  *         retorna:
  *              code = 1 (EXITO)
@@ -93,10 +93,10 @@ cursoDb.create = function (cursos, funCallback) {
  * 
  */
 
-////////Query para modificar curso identificando por su id
-cursoDb.update = function (idcurso, cursos, funCallback) {
-    var query = 'UPDATE cursos SET nombre = ?, descripcion = ?, estado = ? WHERE idcurso = ?'
-    var dbParams = [cursos.nombre, cursos.descripcion, cursos.estado, idcurso];
+//--//-- Query para Actualizar datos de una materia identificando por su id
+materiaDb.update = function (idmateria, materia, funCallback) {
+    var query = 'UPDATE materias SET nombre = ?, objetivo = ?, plan_estudio = ?, estado = ? WHERE idmateria = ?'
+    var dbParams = [materia.nombre, materia.objetivo, materia.plan_estudio, materia.estado, idmateria];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             funCallback({
@@ -109,13 +109,13 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el curso ${idcurso}`,
+                    message: `No se encontro la materia con el ID ${idmateria}`,
                     detail: result
                 });
             } else {
                 funCallback({
                     code:1,
-                    message: `Se modifico el curso ${cursos.idcurso} ${cursos.nombre}`,
+                    message: `Se modifico la materia con el ID ${idmateria} y nombre ${materia.nombre}`,
                     detail: result
                 });
             }
@@ -124,10 +124,10 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
 
 }
 
-// ////////Query para Eliminar fiscamente de la bases de datos un curso identificando por su id
-// cursoDb.delete = function(idcurso,funCallback){
-//     var query = 'DELETE FROM cursos WHERE idcurso = ?'
-//     connection.query(query, idcurso, function (err, result, fields) {
+// //--//--// Query para eliminar fisicamente de una materia identificando por su id
+// materiaDb.delete = function(idmateria,funCallback){
+//     var query = 'DELETE FROM materias WHERE idmateria = ?'
+//     connection.query(query, idmateria, function (err, result, fields) {
 //         if (err) {
 //             funCallback({
 //                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -137,12 +137,12 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
 //         } else {
 //             if (result.affectedRows == 0) {
 //                 funCallback(undefined,{
-//                     message: `No se encontro el curso ${idcurso}`,
+//                     message: `No se encontro la materia con el ID ${idmateria}`,
 //                     detail: result
 //                 });
 //             } else {
 //                 funCallback(undefined,{
-//                     message: `Se elimino el curso ${idcurso}`,
+//                     message: `Se elimino la materia con el ID ${idmateria}`,
 //                     detail: result
 //                 });
 //             }
@@ -150,9 +150,9 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
 //     });
 // }
 
-//////////Query para Eliminar logicamente un curso identificando por su id
-cursoDb.logdelete = function (idcurso, funCallback) {
-    connection.query("UPDATE cursos SET estado = 0 WHERE idcurso = ?",idcurso, function (err, result, fields) {
+//--//--//-- Query para eliminar lógicamente la materia identificando por su id modificando su estado a 0
+materiaDb.logdelete = function (idmateria, funCallback) {
+    connection.query("UPDATE materias SET estado = 0 WHERE idmateria = ?",idmateria, function (err, result, fields) {
         if (err) {
             funCallback({
                 code:3,
@@ -164,14 +164,14 @@ cursoDb.logdelete = function (idcurso, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el id  ${idcurso} del curso`,
+                    message: `No se encontro el ID  ${idmateria} en materias`,
                     detail: result
                 }); 
             } else {
          //       console.error(err);
                     funCallback({
                     code:1,
-                    message: `Se desactivo el curso con el id ${idcurso}`,
+                    message: `Se desactivó la materia con el ID ${idmateria}`,
                     detail: result
                 }); 
             }
@@ -179,4 +179,4 @@ cursoDb.logdelete = function (idcurso, funCallback) {
     });
 }
 
-module.exports = cursoDb;
+module.exports = materiaDb;

@@ -8,16 +8,16 @@ connection.connect((err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log("DB Curso Conectada correctamente");
+        console.log("DB Personas Conectada correctamente");
     }
 });
 //fin de conexion db
 
-var cursoDb = {};
+var personaDb = {};
 
-//Query para listar todos los cursos
-cursoDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM cursos where estado >=1", function (err, result, fields) {
+// Query para listar las personas
+personaDb.getAll = function (funCallback) {
+    connection.query("SELECT * FROM personas where estado >=1", function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -30,9 +30,9 @@ cursoDb.getAll = function (funCallback) {
     });
 }
 
-////Query para listar curso identificado por un id
-cursoDb.getByidcurso = function (idcurso,funCallback) {
-    connection.query("SELECT * FROM cursos WHERE idcurso=?",idcurso, function (err, result, fields) {
+//-- Query para listar una persona por su dni
+personaDb.getByDni = function (dni,funCallback) {
+    connection.query("SELECT * FROM personas WHERE dni=?",dni, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -44,7 +44,7 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
                 funCallback(undefined, result[0]);
             }else{
                 funCallback({
-                    message: "No se encontro el curso"
+                    message:  `No se encontro la persona con el ${dni} ingresado`
                 });
             }
             
@@ -52,15 +52,15 @@ cursoDb.getByidcurso = function (idcurso,funCallback) {
     });
 }
 
-//////Query para crear curso
-cursoDb.create = function (cursos, funCallback) {
-    var query = 'INSERT INTO cursos (nombre,descripcion) VALUES (?,?)'
-    var dbParams = [cursos.nombre, cursos.descripcion];
+//--// Query para crear las personas
+personaDb.create = function (persona, funCallback) {
+    var query = 'INSERT INTO personas (nombre,apellido,dni,sexo,fecha_nacimiento) VALUES (?,?,?,?,?)'
+    var dbParams = [persona.nombre, persona.apellido,persona.dni, persona.sexo, persona.fecha_nacimiento];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             if(err.code == 'ER_DUP_ENTRY'){
                 funCallback({
-                    message: `Ya existe el curso con el nombre ${cursos.nombre}`,
+                    message: `Ya existe la persona con el DNI ${persona.dni}`,
                     detail: err
                 });
             }else{
@@ -73,18 +73,17 @@ cursoDb.create = function (cursos, funCallback) {
             console.error(err);
         } else {
             funCallback(undefined, {
-                message: `Se creo el curso ${cursos.nombre} ${cursos.descripcion}`,
+                message: `Se creo la persona ${persona.apellido} ${persona.nombre} DNI ${persona.dni}`,
                 detail: result
             });
         }
     });
 }
 
-
 /**
  * 
- * @param {*} idcurso 
- * @param {*} cursos 
+ * @param {*} dni 
+ * @param {*} persona 
  * @param {*} funCallback 
  *         retorna:
  *              code = 1 (EXITO)
@@ -93,10 +92,11 @@ cursoDb.create = function (cursos, funCallback) {
  * 
  */
 
-////////Query para modificar curso identificando por su id
-cursoDb.update = function (idcurso, cursos, funCallback) {
-    var query = 'UPDATE cursos SET nombre = ?, descripcion = ?, estado = ? WHERE idcurso = ?'
-    var dbParams = [cursos.nombre, cursos.descripcion, cursos.estado, idcurso];
+
+// Query para Actualizar datos de las personas identificando por Dni
+personaDb.update = function (dni, persona, funCallback) {
+    var query = 'UPDATE personas SET dni = ? , nombre = ?, apellido = ?,  sexo = ?, fecha_nacimiento = ?, estado = ? WHERE dni = ?'
+    var dbParams = [persona.dni, persona.nombre, persona.apellido, persona.sexo, persona.fecha_nacimiento, persona.estado, dni];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             funCallback({
@@ -109,13 +109,13 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el curso ${idcurso}`,
+                    message: `No se encontro la persona con el DNI ${dni}`,
                     detail: result
                 });
             } else {
                 funCallback({
                     code:1,
-                    message: `Se modifico el curso ${cursos.idcurso} ${cursos.nombre}`,
+                    message: `Se modifico la persona ${persona.apellido} ${persona.nombre} DNI ${persona.dni}`,
                     detail: result
                 });
             }
@@ -124,35 +124,44 @@ cursoDb.update = function (idcurso, cursos, funCallback) {
 
 }
 
-// ////////Query para Eliminar fiscamente de la bases de datos un curso identificando por su id
-// cursoDb.delete = function(idcurso,funCallback){
-//     var query = 'DELETE FROM cursos WHERE idcurso = ?'
-//     connection.query(query, idcurso, function (err, result, fields) {
-//         if (err) {
-//             funCallback({
-//                 message: "Surgio un problema, contactese con un administrador. Gracias",
-//                 detail: err
-//             });
-//             console.error(err);
-//         } else {
-//             if (result.affectedRows == 0) {
-//                 funCallback(undefined,{
-//                     message: `No se encontro el curso ${idcurso}`,
-//                     detail: result
-//                 });
-//             } else {
-//                 funCallback(undefined,{
-//                     message: `Se elimino el curso ${idcurso}`,
-//                     detail: result
-//                 });
-//             }
-//         }
-//     });
-// }
 
-//////////Query para Eliminar logicamente un curso identificando por su id
-cursoDb.logdelete = function (idcurso, funCallback) {
-    connection.query("UPDATE cursos SET estado = 0 WHERE idcurso = ?",idcurso, function (err, result, fields) {
+personaDb.delete = function(dni,funCallback){
+    var query = 'DELETE FROM personas WHERE dni = ?'
+    connection.query(query, dni, function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            if (result.affectedRows == 0) {
+                funCallback(undefined,{
+                    message: `No se encontro la persona con el DNI ${dni}`,
+                    detail: result
+                });
+            } else {
+                funCallback(undefined,{
+                    message: `Se elimino la persona con el DNI ${dni}`,
+                    detail: result
+                });
+            }
+        }
+    });
+}
+
+/**
+ *  
+ * @param {*} idpersona 
+ * @param {*} funCallback
+ *         retorna:
+ *              code = 1 (EXITO)
+ *              code = 2 (NOT FOUND) (NO encontro elemento)
+ *              code = 3 (ERROR)
+ * 
+ */
+personaDb.logdelete = function (idpersona, funCallback) {
+    connection.query("UPDATE personas SET estado = 0 WHERE idpersona = ?",idpersona, function (err, result, fields) {
         if (err) {
             funCallback({
                 code:3,
@@ -164,14 +173,14 @@ cursoDb.logdelete = function (idcurso, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro el id  ${idcurso} del curso`,
+                    message: `No se encontro la persona con el id ${idpersona}`,
                     detail: result
                 }); 
             } else {
          //       console.error(err);
                     funCallback({
                     code:1,
-                    message: `Se desactivo el curso con el id ${idcurso}`,
+                    message: `Se desactivó la persona con el id ${idpersona}`,
                     detail: result
                 }); 
             }
@@ -179,4 +188,4 @@ cursoDb.logdelete = function (idcurso, funCallback) {
     });
 }
 
-module.exports = cursoDb;
+module.exports = personaDb;
