@@ -1,4 +1,4 @@
-# **Carpeta para del Proyecto Final del Curso Programación Web Full Stack**
+# **Carpeta para el Proyecto Final del Curso Programación Web Full Stack**
 ## **_Comisión B_**
 [Silicon Misiones](https://siliconmisiones.gob.ar/)
 ***
