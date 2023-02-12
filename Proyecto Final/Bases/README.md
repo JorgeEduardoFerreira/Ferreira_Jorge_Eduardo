@@ -2,4 +2,3 @@
 ---
 ALUMNO: Jorge Eduardo Ferreira \
 *Programación Web Full Stack en JS*
-  
